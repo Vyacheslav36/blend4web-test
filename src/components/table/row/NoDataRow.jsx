@@ -3,9 +3,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
 const NoDataRow = () => (
-  <TableRow
-    hover
-  >
+  <TableRow>
     <TableCell align="left">No data</TableCell>
   </TableRow>
 );

@@ -5,9 +5,9 @@ import Dialog from '@material-ui/core/Dialog';
 import Button from '@material-ui/core/Button';
 import { Box, makeStyles } from '@material-ui/core';
 import { useFormik } from 'formik';
-import { ChromePicker } from 'react-color';
 import * as Yup from 'yup';
 import TextField from '@material-ui/core/TextField';
+import PropTypes from 'prop-types';
 import ColorPicker from '../ColorPicker/ColorPicker';
 
 const useStyles = makeStyles((theme) => ({
@@ -112,6 +112,15 @@ const RowForm = ({
   );
 };
 
+RowForm.propTypes = {
+  handleClose: PropTypes.func.isRequired,
+  handleSave: PropTypes.func,
+  message: PropTypes.string,
+  type: PropTypes.string,
+  currentRow: PropTypes.object,
+  classes: PropTypes.object,
+};
+
 const RowDialog = ({
   open, handleClose, message, type, handleSave, currentRow
 }) => {
@@ -139,6 +148,15 @@ const RowDialog = ({
       </DialogContent>
     </Dialog>
   );
+};
+
+RowDialog.propTypes = {
+  open: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  handleSave: PropTypes.func,
+  message: PropTypes.string,
+  type: PropTypes.string,
+  currentRow: PropTypes.object,
 };
 
 export default RowDialog;

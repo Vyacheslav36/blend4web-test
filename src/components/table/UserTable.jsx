@@ -40,7 +40,7 @@ const UserTable = () => {
   const { rows: savedRows, setToLocalStorage } = useContext(TableContext);
 
   useEffect(() => {
-    setRows(savedRows);
+    setRows(() => savedRows);
   }, [savedRows]);
 
   const handleCreateRow = () => {
@@ -80,16 +80,18 @@ const UserTable = () => {
   };
 
   const handleSave = (data) => {
-    const saveData = (rows, newRow) => {
+    const getNewData = (rows, newRow) => {
       if (!newRow.id) {
         newRow.id = generateId();
-        return [...rows, newRow];
+        return rows.concat(newRow);
       }
-      return rows.map((row) => row.id === data.id ? Object.assign(row, newRow) : row);
+      return rows.map((row) => (row.id === data.id ? Object.assign(row, newRow) : row));
     };
 
-    setRows((prev) => saveData(prev, data));
-    setToLocalStorage(rows);
+    const newData = getNewData(rows, data);
+
+    setRows(() => newData);
+    setToLocalStorage(newData);
   };
 
   const handleEditRow = (id) => {

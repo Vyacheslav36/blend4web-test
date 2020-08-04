@@ -17,12 +17,12 @@ export const useData = () => {
     const staticData = await getStaticData();
     setToLocalStorage(staticData);
     setRows(staticData);
-  }, []);
+  }, [setToLocalStorage]);
 
   useEffect(() => {
     if (!localStorage.getItem(storageName)) getFromStaticFile();
     else setRows(JSON.parse(localStorage.getItem(storageName)));
-  }, []);
+  }, [getFromStaticFile]);
 
   return { setToLocalStorage, rows };
 };

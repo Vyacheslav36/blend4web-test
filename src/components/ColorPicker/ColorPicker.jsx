@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ChromePicker } from 'react-color';
 import { makeStyles } from '@material-ui/core';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   color: {
@@ -66,6 +67,12 @@ const ColorPicker = ({ color, onColorChange, disabled }) => {
       }
     </div>
   );
+};
+
+ColorPicker.propTypes = {
+  color: PropTypes.string.isRequired,
+  onColorChange: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
 };
 
 export default ColorPicker;
