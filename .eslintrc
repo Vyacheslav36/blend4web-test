@@ -1,0 +1,15 @@
+{
+  "extends": ["airbnb"],
+  "rules": {
+    "linebreak-style": 0,
+    "func-names": ["error", "never"],
+    "comma-dangle": 0
+  },
+  "env": {
+    "jest": true
+  },
+  "globals": {
+    "window": true,
+    "document": true
+  }
+}
