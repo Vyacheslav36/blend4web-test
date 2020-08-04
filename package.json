@@ -9,11 +9,13 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "eslint-config-airbnb": "^18.2.0",
+    "formik": "^2.1.5",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-color": "^2.18.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "yup": "^0.29.3"
   },
   "scripts": {
     "start": "react-scripts start",

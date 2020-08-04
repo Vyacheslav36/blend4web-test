@@ -10,6 +10,8 @@ import UserTableRow from './row/UserTableRow';
 import UserTableHeader from './header/UserTableHeader';
 import NoDataRow from './row/NoDataRow';
 import RowDialog from '../dialogs/RowDialog';
+import { generateId } from '../../helpers';
+import CreateButton from '../buttons/CreateButton';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -41,26 +43,34 @@ const UserTable = () => {
     setRows(savedRows);
   }, [savedRows]);
 
+  const handleCreateRow = () => {
+    setCurrentRow(null);
+    setModalMessage('Creating a record');
+    setModalType('create');
+    setModalOpen(true);
+  };
+
   const headCells = [
     { id: 'name', label: 'Name' },
     { id: 'type', label: 'Type' },
     { id: 'color', label: 'Color' },
-    { id: 'actions', label: '' },
+    { id: 'actions', label: <CreateButton handleClick={handleCreateRow} /> },
   ];
 
   const handleRemoveItem = (id) => {
-    const newData = rows.filter((row) => row.id !== Number(id));
+    const newData = rows.filter((row) => String(row.id) !== id);
     setRows(() => newData);
     setToLocalStorage(newData);
   };
 
   const handleModalClose = () => {
-    setModalOpen(false);
-    setModalMessage(null);
+    setModalOpen(() => false);
+    setModalMessage(() => null);
+    setCurrentRow(() => null);
   };
 
   const handleViewRow = (id) => {
-    const row = rows.find((e) => e.id === Number(id));
+    const row = rows.find((e) => String(e.id) === id);
     if (row) {
       setCurrentRow(() => row);
       setModalMessage(`Viewing a recording - ${row.name}`);
@@ -69,8 +79,21 @@ const UserTable = () => {
     }
   };
 
+  const handleSave = (data) => {
+    const saveData = (rows, newRow) => {
+      if (!newRow.id) {
+        newRow.id = generateId();
+        return [...rows, newRow];
+      }
+      return rows.map((row) => row.id === data.id ? Object.assign(row, newRow) : row);
+    };
+
+    setRows((prev) => saveData(prev, data));
+    setToLocalStorage(rows);
+  };
+
   const handleEditRow = (id) => {
-    const row = rows.find((e) => e.id === Number(id));
+    const row = rows.find((e) => String(e.id) === id);
     if (row) {
       setCurrentRow(() => row);
       setModalMessage('Editing a record');
@@ -133,8 +156,10 @@ const UserTable = () => {
       <RowDialog
         open={modalOpen}
         handleClose={handleModalClose}
+        handleSave={handleSave}
         message={modalMessage}
         type={modalType}
+        currentRow={currentRow}
       />
     </Paper>
   );
